@@ -11,11 +11,7 @@ class Interruptor:
             self._ligado = True
 
     def status (self):
-        if self._ligado:
-            return True
-        
-        else:
-            return False
+        return self._ligado
 
     def __str__(self) -> str:
         if self._ligado:
@@ -40,6 +36,8 @@ class Lampada:
     def verify(self):
         if self.interruptor.status():
             self.__ligado = True
+        else:
+            self.__ligado = False
 
     def __str__(self) -> str:
         if self.__connected[1]:
@@ -63,5 +61,13 @@ lampadaSala.connect(interruptorSala)
 print(lampadaSala)
 
 #Interagindo com o Interruptor
+interruptorSala.interact()
+print(lampadaSala)
+
+#interagindo de novo
+interruptorSala.interact()
+print(lampadaSala)
+
+#interagindo de novo
 interruptorSala.interact()
 print(lampadaSala)

@@ -49,19 +49,19 @@ class Lampada:
         else:
             return f"Lampada {self._comodo} is {self.__connected[0]} and OFF"
         
-    
 
-interruptorCozinha = Interruptor("cozinha")
+#Criando lampada e Interruptor
+lampadaSala = Lampada("sala")
+interruptorSala = Interruptor("Sala")
 
-#Lampada Desligada e desconectada
-lampadaCozinha = Lampada("cozinha")
-print(lampadaCozinha)
+print(lampadaSala)
+print(interruptorSala)
+print("")
 
-lampadaCozinha.connect(interruptorCozinha)
+#Conectando Ambos
+lampadaSala.connect(interruptorSala)
+print(lampadaSala)
 
-#Caso com o interruptor desligado
-print(lampadaCozinha)
-
-#Ligando o interruptor
-interruptorCozinha.interact()
-print(lampadaCozinha)
+#Interagindo com o Interruptor
+interruptorSala.interact()
+print(lampadaSala)

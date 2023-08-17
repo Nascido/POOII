@@ -50,7 +50,7 @@ class Lampada:
 
 #Criando lampada e Interruptor
 lampadaSala = Lampada("sala")
-interruptorSala = Interruptor("Sala")
+interruptorSala = Interruptor("sala")
 
 print(lampadaSala)
 print(interruptorSala)

@@ -1,28 +1,28 @@
 
 class Interruptor:
     def __init__(self, comodo) -> None:
-        self._comodo = comodo
-        self._ligado = False
+        self.__comodo = comodo
+        self.__ligado = False
     
     def interact(self):
-        if self._ligado:
-            self._ligado = False
+        if self.__ligado:
+            self.__ligado = False
         else:
-            self._ligado = True
+            self.__ligado = True
 
     def status (self):
-        return self._ligado
+        return self.__ligado
 
     def __str__(self) -> str:
-        if self._ligado:
-            return f"Interruptor: {self._comodo} is ON"
+        if self.__ligado:
+            return f"Interruptor: {self.__comodo} is ON"
         else:
-            return f"Interruptor: {self._comodo} is OFF"
+            return f"Interruptor: {self.__comodo} is OFF"
 
 
 class Lampada:
     def __init__(self, comodo) -> None:
-        self._comodo = comodo
+        self.__comodo = comodo
         self.__ligado = False
         self.__connected = ("disconnected", False)
 
@@ -43,9 +43,9 @@ class Lampada:
         if self.__connected[1]:
             self.verify()
         if self.__ligado:
-            return f"Lampada {self._comodo} is {self.__connected[0]} and ON"
+            return f"Lampada {self.__comodo} is {self.__connected[0]} and ON"
         else:
-            return f"Lampada {self._comodo} is {self.__connected[0]} and OFF"
+            return f"Lampada {self.__comodo} is {self.__connected[0]} and OFF"
         
 
 #Criando lampada e Interruptor

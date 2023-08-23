@@ -39,6 +39,7 @@ class CamaroteSuperior(VIP):
         return f"Ingresso VIP foi adiquirido! Valor pago: {self._valor + self._adicional + self._adicionalCamarote}"
 
 
+"""
 assento22 = Normal()
 
 assento67 = CamaroteInferior()
@@ -50,3 +51,4 @@ print(assento22)
 print(assento67)
 
 print(assento02)
+"""

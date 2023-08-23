@@ -24,7 +24,7 @@ class Velho(Imovel):
     def __str__(self) -> str:
         return f"Imovel Novo com localização: {self._endereco}. Valor = {self._valor*self._desconto}"
 
-
+"""
 beiramar = Novo("Avenida beira mar", 155000)
 
 mauro = Velho("Mauro Ramos", 100000)
@@ -32,3 +32,4 @@ mauro = Velho("Mauro Ramos", 100000)
 print(beiramar)
 
 print(mauro)
+"""

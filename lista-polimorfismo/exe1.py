@@ -48,6 +48,7 @@ class Tech(Assistent):
         return self._salary + self._bonus
 
 
+"""
 gerentePedro = Manager("Pedro Garcia", 122344455666)
 
 assistenteFelipe = Admin("Felipe Ramos", 122234567755, "RH", 3344455)
@@ -65,3 +66,4 @@ print()
 # Informações do Assistente de Tecnico
 assistenteJose.showData()
 print(assistenteJose.monthSalary())
+"""

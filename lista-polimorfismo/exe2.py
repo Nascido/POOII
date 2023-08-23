@@ -1,5 +1,5 @@
 
-class Ingresso():
+class Ingresso:
     def __init__(self) -> None:
         self._valor = 600
 
@@ -37,8 +37,7 @@ class CamaroteSuperior(VIP):
     
     def __str__(self):
         return f"Ingresso VIP foi adiquirido! Valor pago: {self._valor + self._adicional + self._adicionalCamarote}"
-    
-    
+
 
 assento22 = Normal()
 

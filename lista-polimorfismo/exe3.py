@@ -1,5 +1,5 @@
 
-class Imovel():
+class Imovel:
     def __init__(self, endereco, valor) -> None:
         self._endereco = endereco
         self._valor = valor
@@ -32,4 +32,3 @@ mauro = Velho("Mauro Ramos", 100000)
 print(beiramar)
 
 print(mauro)
-

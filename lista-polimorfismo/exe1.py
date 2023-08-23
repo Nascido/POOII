@@ -1,15 +1,16 @@
 
-class Manager():
+class Manager:
     def __init__(self, name, cpf) -> None:
         self._name = name 
-        self._cpf  = cpf
+        self._cpf = cpf
 
     def showData(self):
         print(f"Manager named {self._name}. CPF = {self._cpf}")
 
         return self._name, self._cpf
 
-class Employee():
+
+class Employee:
     def __init__(self, name, cpf, sector) -> None:
         self._name = name
         self._cpf = cpf
@@ -19,6 +20,7 @@ class Employee():
         print(f"Employee named {self._name} work in sector {self._sector}. CPF = {self._cpf}")
 
         return self._name, self._sector, self._cpf
+
 
 class Assistent(Employee):
     def __init__(self, name, cpf, sector, registration) -> None:
@@ -35,6 +37,7 @@ class Admin(Assistent):
     def monthSalary(self):
         return self._salary
 
+
 class Tech(Assistent):
     def __init__(self, name, cpf, sector, registration) -> None:
         super().__init__(name, cpf, sector, registration)
@@ -43,6 +46,7 @@ class Tech(Assistent):
 
     def monthSalary(self):
         return self._salary + self._bonus
+
 
 gerentePedro = Manager("Pedro Garcia", 122344455666)
 

@@ -57,18 +57,18 @@ print(lampadaSala)
 print(interruptorSala)
 print("")
 
-# conectando Ambos
+# Conectando Ambos
 lampadaSala.connect(interruptorSala)
 print(lampadaSala)
 
-# interagindo com o Interruptor
+# Interagindo com o Interruptor
 interruptorSala.interact()
 print(lampadaSala)
 
-# interagindo de novo
+# Interagindo de novo
 interruptorSala.interact()
 print(lampadaSala)
 
-# interagindo de novo
+# Interagindo de novo
 interruptorSala.interact()
 print(lampadaSala)

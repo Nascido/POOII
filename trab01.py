@@ -1,6 +1,6 @@
 """
 Sistema de Aluguel de Veículos
 
-Registro e Locação
+Registro e Locação de Automoveis
 
 """

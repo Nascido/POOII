@@ -16,29 +16,21 @@ class Veiculo:
 
     
 class Carro(Veiculo):
-    def __init__(self, assentos = 5) -> None:
+    def __init__(self, assentos=5) -> None:
         super().__init__()
         self._assentos = assentos
 
 
 class Moto(Veiculo):
-    def __init__(self, cilindrada = 150) -> None:
+    def __init__(self, cilindrada=150) -> None:
         super().__init__()
         self._cilindrada = cilindrada
 
 
-class PessoaFisica:
+class Cliente:
     def __int__(self, nome, idade, cpf, cnh):
         self._nome = nome
         self._idade = idade
         self._cpf = cpf
         self._cnh = cnh
 
-
-class Locatario:
-    def __init__(self, dias):
-        self._dias = dias
-
-
-class Cliente(PessoaFisica, Locatario):
-  pass

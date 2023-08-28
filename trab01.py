@@ -3,6 +3,7 @@
 Trabalho 01 :  POO II
 
 """
+import datetime
 
 
 class Veiculo:
@@ -28,9 +29,19 @@ class Moto(Veiculo):
 
 
 class Cliente:
-    def __int__(self, nome, idade, cpf, cnh):
+    def __int__(self, nome, idade, cpf, vencimentoCNH) -> None:
         self._nome = nome
         self._idade = idade
         self._cpf = cpf
-        self._cnh = cnh
+        self._vencimentoCNH = vencimentoCNH
 
+    def testarIdade(self):
+        if self._idade < 24:
+            print("O locatário deve ter idade superior a 24 anos!")
+            del self
+
+    def __del__(self):
+        print(f"Pedimos perdão {self._nome}, não podemos fechar negócio até que os pré-requesitos sejam cumpridos.")
+
+
+fulano = Cliente()

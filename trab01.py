@@ -29,7 +29,7 @@ class Moto(Veiculo):
 
 
 class Cliente:
-    def __int__(self, nome, idade, cpf, vencimentoCNH) -> None:
+    def __init__(self, nome, idade, cpf, vencimentoCNH) -> None:
         self._nome = nome
         self._idade = idade
         self._cpf = cpf
@@ -40,8 +40,5 @@ class Cliente:
             print("O locatário deve ter idade superior a 24 anos!")
             del self
 
-    def __del__(self):
-        print(f"Pedimos perdão {self._nome}, não podemos fechar negócio até que os pré-requesitos sejam cumpridos.")
 
-
-fulano = Cliente()
+fulano = Cliente("Rafael", 34, 1111111, 5)

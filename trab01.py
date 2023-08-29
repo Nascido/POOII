@@ -15,9 +15,8 @@ class Veiculo:
         self._alugado = False
         self._diaria = 50
 
-        self.registrarVeiculo()
-
     def registrarVeiculo(self):
+        print("###################################################################################")
         print("Por favor insira as informações para o registro do Veículo")
         self._modelo = input("Modelo do Veículo: ")
         self._placa = input("Placa: ")
@@ -39,6 +38,7 @@ class Veiculo:
 
     def getDiaria(self):
         return self._diaria
+
 
 class Carro(Veiculo):
     def __init__(self, assentos=5, arcondicionado=True, classe="normal") -> None:
@@ -64,6 +64,7 @@ class Cliente:
         self._permitido = False
 
     def registrarCliente(self):
+        print("###################################################################################")
         print("Por favor insira os dados do cliente locatário")
         self._nome = input("Nome: ")
         self._idade = int(input("Idade: "))
@@ -89,6 +90,9 @@ class Cliente:
         vencimentoCNH = cnh
         self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
 
+    def getName(self):
+        return self._name
+
     def testarValidade(self):
         today = datetime.datetime.now()
         diff = (self._vencimentoCNH - today).days
@@ -101,6 +105,7 @@ class Cliente:
     def testarIdade(self):
         if self._idade < 22:
             print("O locatário deve ter idade superior a 22 anos!")
+            self._permitido = False
         else:
             self._permitido = True
 
@@ -108,5 +113,3 @@ class Cliente:
 cliente_rafael = Cliente("Rafael", 22, 12471455905, "10/06/24")
 cliente_pedro = Cliente("Pedro", 25, 11112222333, "20/08/27")
 cliente_tobias = Cliente("Tobias", 34, 22222233333, "03/03/25")
-
-

@@ -71,8 +71,7 @@ class Cliente:
         self._cpf = input("CPF: ")
         vencimentoCNH = input("Vencimento da CNH (dd/mm/yy): ")
         self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
-        self.testarIdade()
-        self.testarValidade()
+        self.testarPermissao()
 
     def setDados(self, data):
         self._nome = data[0]
@@ -80,8 +79,6 @@ class Cliente:
         self._cpf = data[2]
         vencimentoCNH = data[3]
         self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
-        self.testarIdade()
-        self.testarValidade()
 
     def setIdade(self, idade):
         self._idade = idade
@@ -91,7 +88,7 @@ class Cliente:
         self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
 
     def getName(self):
-        return self._name
+        return self._nome
 
     def testarValidade(self):
         today = datetime.datetime.now()
@@ -108,6 +105,10 @@ class Cliente:
             self._permitido = False
         else:
             self._permitido = True
+
+    def testarPermissao(self):
+        self.testarValidade()
+        self.testarIdade()
 
 
 cliente_rafael = Cliente("Rafael", 22, 12471455905, "10/06/24")

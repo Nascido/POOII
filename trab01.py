@@ -13,6 +13,8 @@ class Veiculo:
         self._cor = None
         self._alugado = False
         self._diaria = 50
+        self._tipo = ""
+        self._cliente = None
 
     def registrarVeiculo(self):
         print("###################################################################################")
@@ -20,6 +22,12 @@ class Veiculo:
         self._modelo = input("Modelo do Veículo: ")
         self._cor = input("Cor: ")
         self._placa = input("Placa: ")
+
+    def alugar(self, cliente):
+        if cliente.getpermissao():
+            if cliente.havetipoCNH(self._tipo):
+                self._alugado = True
+                self._cliente = cliente
 
     def setDados(self, data):
         self._modelo = data[0]
@@ -45,6 +53,11 @@ class Carro(Veiculo):
         self._assentos = assentos
         self._arcondicionado = arcondicionado
         self._classe = classe
+        self._tipo = 'B'
+
+    def __str__(self) -> str:
+        if self._alugado:
+            return f"Carro modelo {self._modelo} com placa {self._placa} alugada por {self._cliente.getname()}"
 
 
 class Moto(Veiculo):
@@ -52,8 +65,12 @@ class Moto(Veiculo):
         super().__init__()
         self._cilindrada = cilindrada
         self._classe = classe
-
+        self._tipo = 'A'
     
+    def __str__(self) -> str:
+        if self._alugado:
+            return f"Moto modelo {self._modelo} com placa {self._placa} alugada por {self._cliente.getname()}"
+
 class Cliente:
     def __init__(self, nome=None, idade=None, tipoCNH="AB", vencimentoCNH="01/01/01") -> None:
         self._nome = nome
@@ -72,21 +89,21 @@ class Cliente:
         self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
         self.testarPermissao()
 
-    def setDados(self, data):
+    def setdata(self, data):
         self._nome = data[0]
         self._idade = data[1]
         self._cpf = data[2]
         vencimentoCNH = data[3]
         self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
 
-    def setIdade(self, idade):
+    def setidade(self, idade):
         self._idade = idade
 
     def setCNH(self, cnh):
         vencimentoCNH = cnh
         self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
 
-    def getName(self):
+    def getname(self):
         return self._nome
 
     def testarValidade(self):

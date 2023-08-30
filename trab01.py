@@ -10,7 +10,6 @@ class Veiculo:
     def __int__(self):
         self._modelo = None
         self._placa = None
-        self._documento = None
         self._cor = None
         self._alugado = False
         self._diaria = 50
@@ -19,13 +18,13 @@ class Veiculo:
         print("###################################################################################")
         print("Por favor insira as informações para o registro do Veículo")
         self._modelo = input("Modelo do Veículo: ")
+        self._cor = input("Cor: ")
         self._placa = input("Placa: ")
-        self._documento = input("Documentação: ")
 
     def setDados(self, data):
         self._modelo = data[0]
         self._placa = data[1]
-        self._documento = data[2]
+        self._cor = data[2]
 
     def setAlugado(self, estado):
         self._alugado = estado
@@ -56,10 +55,10 @@ class Moto(Veiculo):
 
     
 class Cliente:
-    def __init__(self, nome=None, idade=None, cpf=None, vencimentoCNH="26/01/01") -> None:
+    def __init__(self, nome=None, idade=None, tipoCNH="AB", vencimentoCNH="01/01/01") -> None:
         self._nome = nome
         self._idade = idade
-        self._cpf = cpf
+        self._tipoCNH = tipoCNH
         self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
         self._permitido = False
 
@@ -110,7 +109,19 @@ class Cliente:
         self.testarValidade()
         self.testarIdade()
 
+    def __str__(self) -> str:
+        if self._permitido:
+            if self._tipoCNH == "AB":
+                return f"{self._nome}: Carro e Moto"
+            elif self._tipoCNH == "A":
+                return f"{self._nome}: Apenas Moto"
+            elif self._tipoCNH == "B":
+                return f"{self._nome}: Apenas Carro"
+            else:
+                self._permitido = False
+                return f"{self._nome}: Não Permitido"
 
-cliente_rafael = Cliente("Rafael", 22, 12471455905, "10/06/24")
-cliente_pedro = Cliente("Pedro", 25, 11112222333, "20/08/27")
-cliente_tobias = Cliente("Tobias", 34, 22222233333, "03/03/25")
+
+rafael = Cliente("Rafael", 22, "AB", "10/06/24")
+pedro = Cliente("Pedro", 25, "A", "20/08/27")
+tobias = Cliente("Tobias", 34, "B", "03/03/25")

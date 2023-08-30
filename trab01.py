@@ -11,10 +11,9 @@ class Veiculo:
         self._modelo = None
         self._placa = None
         self._cor = None
-        self._alugado = False
         self._diaria = 50
-        self._tipo = ""
         self._cliente = None
+        self._tipo = ''
 
     def registrarVeiculo(self):
         print("###################################################################################")
@@ -29,6 +28,7 @@ class Veiculo:
                 if cliente.havetipoCNH(self._tipo):
                     self._alugado = True
                     self._cliente = cliente
+                    self._cliente.addVeiculo(self)
                 else:
                     print(f"Cliente {cliente.getname()} não possui CNH para este veículo")
 
@@ -37,15 +37,27 @@ class Veiculo:
         else:
             print(f"Veículo {self._modelo} já está alugado!")
 
-    def setdata(self, data):
-        self._modelo = data[0]
-        self._placa = data[1]
-        self._cor = data[2]
+    def devolver(self):
+        if self._alugado:
+            self._alugado = False
+            self._cliente.removeVeiculo(self)
 
-    def setalugado(self, estado):
+        else:
+            print(f"Veiculo {self._modelo} não está alugado")
+
+    def setdata(self, data):
+        """
+        data = [Modelo, cor, placa]
+        """
+
+        self._modelo = data[0]
+        self._cor = data[1]
+        self._placa = data[2]
+
+    def _setalugado(self, estado):
         self._alugado = estado
 
-    def setdiaria(self, valor):
+    def _setdiaria(self, valor):
         self._diaria = valor
 
     def getalugado(self):
@@ -62,10 +74,11 @@ class Carro(Veiculo):
         self._arcondicionado = arcondicionado
         self._classe = classe
         self._tipo = 'B'
+        self._alugado = False
 
     def __str__(self) -> str:
         if self._alugado:
-            return f"Carro modelo {self._modelo} com placa {self._placa} alugada por {self._cliente.getname()}."
+            return f"Carro modelo {self._modelo} com placa {self._placa} alugado por {self._cliente.getname()}."
         else:
             return f"Carro modelo {self._modelo} com placa {self._placa} disponível para alugar."
 
@@ -76,12 +89,13 @@ class Moto(Veiculo):
         self._cilindrada = cilindrada
         self._classe = classe
         self._tipo = 'A'
+        self._alugado = False
     
     def __str__(self) -> str:
         if self._alugado:
             return f"Moto modelo {self._modelo} com placa {self._placa} alugada por {self._cliente.getname()}."
         else:
-            return f"Moto modelo {self._modelo} com plca {self._placa} disponível para alugar."
+            return f"Moto modelo {self._modelo} com placa {self._placa} disponível para alugar."
 
 
 class Cliente:
@@ -92,6 +106,7 @@ class Cliente:
         self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
         self._registrado = registrar
         self._permitido = False
+        self._veiculosAlugados = []
 
         if self._registrado:
             self.testarPermissao()
@@ -127,34 +142,51 @@ class Cliente:
         if self.testarIdade() and self.testarValidade():
             self._permitido = True
 
+    def addVeiculo(self, veiculo):
+        self._veiculosAlugados.append(veiculo)
+
+    def removeVeiculo(self, veiculo):
+        self._veiculosAlugados.remove(veiculo)
+
     def havetipoCNH(self, tipo):
         if self._tipoCNH.find(tipo) != -1:
             return True
         else:
             return False
 
-    def setdata(self, data):
+    def _setdata(self, data):
+        """
+
+        data = [nome, idade, tipoCNH, vencimentoCNH]
+
+        """
         self._nome = data[0]
         self._idade = data[1]
-        self._cpf = data[2]
+        self._tipoCNH = data[2]
         vencimentoCNH = data[3]
         self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
         self.testarPermissao()
 
-    def setidade(self, idade):
+    def _setidade(self, idade):
         self._idade = idade
         self.testarIdade()
 
-    def settipoCNH(self, tipo):
+    def _settipoCNH(self, tipo):
         self._tipoCNH = tipo
 
-    def setCNH(self, cnh):
+    def _setCNH(self, cnh):
         vencimentoCNH = cnh
         self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
         self.testarValidade()
 
     def getname(self):
         return self._nome
+
+    def getpermissao(self):
+        return self._permitido
+
+    def gettipoCNH(self):
+        return self._tipoCNH
 
     def __str__(self) -> str:
         if self._permitido and self._registrado:
@@ -172,3 +204,9 @@ class Cliente:
 
 rafael = Cliente("Rafael", 22, "AB", "10/06/24", True)
 pedro = Cliente("Pedro", 25, "A", "20/08/27", True)
+
+moto = Moto()
+carro = Carro()
+
+moto.setdata(["Yamaha Crosser", "preto", "QHJ7890"])
+carro.setdata(["Fiat Uno", "branco", "KLI4578"])

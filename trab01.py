@@ -11,9 +11,9 @@ class Veiculo:
         self._modelo = None
         self._placa = None
         self._cor = None
-        self._diaria = 50
         self._cliente = None
         self._tipo = ''
+        self._dataDevolucao = None
 
     def registrarVeiculo(self):
         print("###################################################################################")
@@ -22,13 +22,15 @@ class Veiculo:
         self._cor = input("Cor: ")
         self._placa = input("Placa: ")
 
-    def alugar(self, cliente):
+    def alugar(self, cliente, dias):
         if not self._alugado:
             if cliente.getpermissao():
                 if cliente.havetipoCNH(self._tipo):
                     self._alugado = True
                     self._cliente = cliente
                     self._cliente.addVeiculo(self)
+                    today = datetime.datetime.now()
+                    self._dataDevolucao = today + datetime.timedelta(dias)
                 else:
                     print(f"Cliente {cliente.getname()} não possui CNH para este veículo")
 
@@ -41,7 +43,6 @@ class Veiculo:
         if self._alugado:
             self._alugado = False
             self._cliente.removeVeiculo(self)
-
         else:
             print(f"Veiculo {self._modelo} não está alugado")
 
@@ -66,15 +67,27 @@ class Veiculo:
     def getdiaria(self):
         return self._diaria
 
+    def getdiaDevolucao(self):
+        return self._dataDevolucao
+
 
 class Carro(Veiculo):
-    def __init__(self, assentos=5, arcondicionado=True, classe="normal") -> None:
+    def __init__(self, assentos=5, arcondicionado=False, classe="normal") -> None:
         super().__init__()
         self._assentos = assentos
         self._arcondicionado = arcondicionado
         self._classe = classe
         self._tipo = 'B'
+        self._diaria = 50
         self._alugado = False
+
+    def calculaDiaria(self):
+        if self._assentos > 5:
+            self._diaria *= 1.5
+        if self._arcondicionado:
+            self._diaria += 20
+        if self._classe == "luxo":
+            self._diaria *= 1.5
 
     def __str__(self) -> str:
         if self._alugado:
@@ -89,8 +102,22 @@ class Moto(Veiculo):
         self._cilindrada = cilindrada
         self._classe = classe
         self._tipo = 'A'
+        self._diaria = 30
         self._alugado = False
-    
+
+    def calculaDiaria(self):
+        if 150 < self._cilindrada < 300:
+            self._diaria += 5
+
+        elif 300 <= self._cilindrada < 500:
+            self._diaria += 10
+
+        else:
+            self._diaria += 20
+
+        if self._classe == "luxo":
+            self._diaria *= 1.5
+
     def __str__(self) -> str:
         if self._alugado:
             return f"Moto modelo {self._modelo} com placa {self._placa} alugada por {self._cliente.getname()}."
@@ -205,8 +232,31 @@ class Cliente:
 rafael = Cliente("Rafael", 22, "AB", "10/06/24", True)
 pedro = Cliente("Pedro", 25, "A", "20/08/27", True)
 
-moto = Moto()
-carro = Carro()
 
-moto.setdata(["Yamaha Crosser", "preto", "QHJ7890"])
-carro.setdata(["Fiat Uno", "branco", "KLI4578"])
+# Primeira Opção:
+moto1 = Moto()
+moto1.setdata(["Yamaha Crosser", "preto", "QHJ7890"])
+
+carro1 = Carro()
+carro1.setdata(["Fiat Uno", "branco", "KLI4578"])
+
+
+# Segunda Opção
+moto2 = Moto(300, 'normal')
+moto2.setdata(["Yamaha Lander", "preto", "LGJ7430"])
+
+carro2 = Carro(5, True, 'normal')
+carro2.setdata(["Sedan", "prata", "TYU5680"])
+
+
+# Terceira Opção
+moto3 = Moto(500, 'luxo')
+moto3.setdata(["Honda CB 500", "vermelho", "RED8940"])
+
+carro3 = Carro(8, True, 'normal')
+carro3.setdata(["JEEP SUV", "branco", "IHJ7689"])
+
+
+# Quarta Opção
+carro4 = Carro(8, True, 'luxo')
+carro4.setdata(["Honda Odyssey", "vermelho", "IOK6732"])

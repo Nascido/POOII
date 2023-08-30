@@ -29,21 +29,21 @@ class Veiculo:
                 self._alugado = True
                 self._cliente = cliente
 
-    def setDados(self, data):
+    def setdata(self, data):
         self._modelo = data[0]
         self._placa = data[1]
         self._cor = data[2]
 
-    def setAlugado(self, estado):
+    def setalugado(self, estado):
         self._alugado = estado
 
-    def setDiaria(self, valor):
+    def setdiaria(self, valor):
         self._diaria = valor
 
-    def getAlugado(self):
+    def getalugado(self):
         return self._alugado
 
-    def getDiaria(self):
+    def getdiaria(self):
         return self._diaria
 
 
@@ -57,7 +57,9 @@ class Carro(Veiculo):
 
     def __str__(self) -> str:
         if self._alugado:
-            return f"Carro modelo {self._modelo} com placa {self._placa} alugada por {self._cliente.getname()}"
+            return f"Carro modelo {self._modelo} com placa {self._placa} alugada por {self._cliente.getname()}."
+        else:
+            return f"Carro modelo {self._modelo} com placa {self._placa} disponível para alugar."
 
 
 class Moto(Veiculo):
@@ -69,7 +71,10 @@ class Moto(Veiculo):
     
     def __str__(self) -> str:
         if self._alugado:
-            return f"Moto modelo {self._modelo} com placa {self._placa} alugada por {self._cliente.getname()}"
+            return f"Moto modelo {self._modelo} com placa {self._placa} alugada por {self._cliente.getname()}."
+        else:
+            return f"Carro modelo {self._modelo} com plca {self._placa} disponível para alugar."
+
 
 class Cliente:
     def __init__(self, nome=None, idade=None, tipoCNH="AB", vencimentoCNH="01/01/01") -> None:
@@ -88,23 +93,6 @@ class Cliente:
         vencimentoCNH = input("Vencimento da CNH (dd/mm/yy): ")
         self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
         self.testarPermissao()
-
-    def setdata(self, data):
-        self._nome = data[0]
-        self._idade = data[1]
-        self._cpf = data[2]
-        vencimentoCNH = data[3]
-        self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
-
-    def setidade(self, idade):
-        self._idade = idade
-
-    def setCNH(self, cnh):
-        vencimentoCNH = cnh
-        self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
-
-    def getname(self):
-        return self._nome
 
     def testarValidade(self):
         today = datetime.datetime.now()
@@ -126,17 +114,42 @@ class Cliente:
         self.testarValidade()
         self.testarIdade()
 
+    def havetipoCNH(self, tipo):
+        if self._tipoCNH.find(tipo) != -1:
+            return True
+        else:
+            return False
+
+    def setdata(self, data):
+        self._nome = data[0]
+        self._idade = data[1]
+        self._cpf = data[2]
+        vencimentoCNH = data[3]
+        self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
+
+    def setidade(self, idade):
+        self._idade = idade
+
+    def settipoCNH(self, tipo):
+        self._tipoCNH = tipo
+
+    def setCNH(self, cnh):
+        vencimentoCNH = cnh
+        self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
+
+    def getname(self):
+        return self._nome
+
     def __str__(self) -> str:
         if self._permitido:
-            if self._tipoCNH == "AB":
-                return f"{self._nome}: Carro e Moto"
-            elif self._tipoCNH == "A":
-                return f"{self._nome}: Apenas Moto"
-            elif self._tipoCNH == "B":
-                return f"{self._nome}: Apenas Carro"
-            else:
-                self._permitido = False
-                return f"{self._nome}: Não Permitido"
+            if self.havetipoCNH('AB'):
+                return f"Cliente {self._nome}: Permissão para Carro e Moto"
+            elif self.havetipoCNH('A'):
+                return f"Cliente {self._nome}: Permissão para Moto"
+            elif self.havetipoCNH('B'):
+                return f"Cliente {self._nome}: Permissão para Carro"
+        else:
+            return f"Cliente {self._nome}: Sem Permissão"
 
 
 rafael = Cliente("Rafael", 22, "AB", "10/06/24")

@@ -80,6 +80,7 @@ class Carro(Veiculo):
         self._tipo = 'B'
         self._diaria = 50
         self._alugado = False
+        self.calculaDiaria()
 
     def calculaDiaria(self):
         if self._assentos > 5:
@@ -104,10 +105,11 @@ class Moto(Veiculo):
         self._tipo = 'A'
         self._diaria = 30
         self._alugado = False
+        self.calculaDiaria()
 
     def calculaDiaria(self):
-        if 150 < self._cilindrada < 300:
-            self._diaria += 5
+        if 150 <= self._cilindrada < 300:
+            self._diaria += 2
 
         elif 300 <= self._cilindrada < 500:
             self._diaria += 10

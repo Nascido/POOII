@@ -67,11 +67,11 @@ def interface_simplificada():
                     print(f"\n\n{veiculoEscolhido}")
                     print(f"Dia do negócio: {veiculoEscolhido.getdiaAlugada()}")
                     print(f"Dia de devolução: {veiculoEscolhido.getdiaDevolucao()}\n")
-                    read = int(input("Insira 0 para sair: "))
+                    return cliente
 
         else:
             print("Infelizmente não podemos aceitar seu cadastro.")
-            read = 0
+            return cliente
 
 
-interface_simplificada()
+_clienteNovo = interface_simplificada()

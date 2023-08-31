@@ -14,6 +14,7 @@ class Veiculo:
         self._cliente = None
         self._tipo = ''
         self._dataDevolucao = None
+        self._dataAluguel = None
 
     def registrarVeiculo(self):
         print("###################################################################################")
@@ -31,6 +32,7 @@ class Veiculo:
                     self._cliente.addVeiculo(self)
                     today = datetime.datetime.now()
                     self._dataDevolucao = today + datetime.timedelta(dias)
+                    self._dataAluguel = today
                 else:
                     print(f"Cliente {cliente.getname()} não possui CNH para este veículo")
 
@@ -43,6 +45,15 @@ class Veiculo:
         if self._alugado:
             self._alugado = False
             self._cliente.removeVeiculo(self)
+            today = datetime.datetime.now()
+            diff = (today - self._dataAluguel).days
+
+            if diff == 0:
+                valorFinal = self._diaria
+            else:
+                valorFinal = self._diaria*diff
+
+            print(f"Devolução! Veículo {self._modelo} por {self._cliente.getname()}. Total a pagar = R$ {valorFinal}")
         else:
             print(f"Veiculo {self._modelo} não está alugado")
 
@@ -69,6 +80,9 @@ class Veiculo:
 
     def getdiaDevolucao(self):
         return self._dataDevolucao
+
+    def getdiaAlugada(self):
+        return self._dataAluguel
 
 
 class Carro(Veiculo):
@@ -161,7 +175,7 @@ class Cliente:
             return True
 
     def testarIdade(self):
-        if self._idade < 22:
+        if self._idade < 20:
             print(f"O locatário {self._nome} deve ter idade superior a 22 anos!")
             return False
         else:
@@ -231,8 +245,9 @@ class Cliente:
             return f"Cliente {self._nome}: Sem Permissão"
 
 
-rafael = Cliente("Rafael", 22, "AB", "10/06/24", True)
-pedro = Cliente("Pedro", 25, "A", "20/08/27", True)
+_rafael = Cliente("Rafael", 22, "AB", "10/06/24", True)
+_pedro = Cliente("Pedro", 25, "A", "20/08/27", True)
+_marcelo = Cliente()
 
 
 # Primeira Opção:

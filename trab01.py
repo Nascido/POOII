@@ -2,6 +2,8 @@
 """
 Trabalho 01 :  POO II
 
+    Implementação de um sistema de Aluguel de Veiculos
+
 """
 import datetime
 
@@ -33,13 +35,21 @@ class Veiculo:
                     today = datetime.datetime.now()
                     self._dataDevolucao = today + datetime.timedelta(dias)
                     self._dataAluguel = today
+
+                    return True
                 else:
                     print(f"Cliente {cliente.getname()} não possui CNH para este veículo")
 
+                    return False
+
             else:
                 print(f"Cliente {cliente.getname()} sem permissão para alugar!")
+
+                return False
         else:
             print(f"Veículo {self._modelo} já está alugado!")
+
+            return False
 
     def devolver(self):
         if self._alugado:
@@ -163,7 +173,12 @@ class Cliente:
         vencimentoCNH = input("Vencimento da CNH (dd/mm/yy): ")
         self._vencimentoCNH = datetime.datetime.strptime(vencimentoCNH, "%d/%m/%y")
         self._registrado = True
-        self.testarPermissao()
+        apto = self.testarPermissao()
+
+        if apto:
+            return True
+        else:
+            return False
 
     def testarValidade(self):
         today = datetime.datetime.now()
@@ -184,6 +199,10 @@ class Cliente:
     def testarPermissao(self):
         if self.testarIdade() and self.testarValidade():
             self._permitido = True
+            return True
+
+        else:
+            return False
 
     def addVeiculo(self, veiculo):
         self._veiculosAlugados.append(veiculo)
@@ -243,37 +262,3 @@ class Cliente:
                 return f"Cliente {self._nome}: Sem Permissão"
         else:
             return f"Cliente {self._nome}: Sem Permissão"
-
-
-_rafael = Cliente("Rafael", 22, "AB", "10/06/24", True)
-_pedro = Cliente("Pedro", 25, "A", "20/08/27", True)
-_marcelo = Cliente()
-
-
-# Primeira Opção:
-moto1 = Moto()
-moto1.setdata(["Yamaha Crosser", "preto", "QHJ7890"])
-
-carro1 = Carro()
-carro1.setdata(["Fiat Uno", "branco", "KLI4578"])
-
-
-# Segunda Opção
-moto2 = Moto(300, 'normal')
-moto2.setdata(["Yamaha Lander", "preto", "LGJ7430"])
-
-carro2 = Carro(5, True, 'normal')
-carro2.setdata(["Sedan", "prata", "TYU5680"])
-
-
-# Terceira Opção
-moto3 = Moto(500, 'luxo')
-moto3.setdata(["Honda CB 500", "vermelho", "RED8940"])
-
-carro3 = Carro(8, True, 'normal')
-carro3.setdata(["JEEP SUV", "branco", "IHJ7689"])
-
-
-# Quarta Opção
-carro4 = Carro(8, True, 'luxo')
-carro4.setdata(["Honda Odyssey", "vermelho", "IOK6732"])

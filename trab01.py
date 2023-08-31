@@ -40,16 +40,13 @@ class Veiculo:
                 else:
                     print(f"Cliente {cliente.getname()} não possui CNH para este veículo")
 
-                    return False
-
             else:
                 print(f"Cliente {cliente.getname()} sem permissão para alugar!")
 
-                return False
         else:
             print(f"Veículo {self._modelo} já está alugado!")
 
-            return False
+        return False
 
     def devolver(self):
         if self._alugado:
@@ -64,8 +61,11 @@ class Veiculo:
                 valorFinal = self._diaria*diff
 
             print(f"Devolução! Veículo {self._modelo} por {self._cliente.getname()}. Total a pagar = R$ {valorFinal}")
+
+            return True
         else:
             print(f"Veiculo {self._modelo} não está alugado")
+            return False
 
     def setdata(self, data):
         """
@@ -177,8 +177,8 @@ class Cliente:
 
         if apto:
             return True
-        else:
-            return False
+        
+        return False
 
     def testarValidade(self):
         today = datetime.datetime.now()
@@ -186,23 +186,22 @@ class Cliente:
         if diff < 0:
             print(f"Locatário {self._nome} com CNH vencida!")
             return False
-        else:
-            return True
+        
+        return True
 
     def testarIdade(self):
         if self._idade < 20:
             print(f"O locatário {self._nome} deve ter idade superior a 22 anos!")
             return False
-        else:
-            return True
+        
+        return True
 
     def testarPermissao(self):
         if self.testarIdade() and self.testarValidade():
             self._permitido = True
             return True
-
-        else:
-            return False
+        
+        return False
 
     def addVeiculo(self, veiculo):
         self._veiculosAlugados.append(veiculo)
@@ -213,8 +212,8 @@ class Cliente:
     def havetipoCNH(self, tipo):
         if self._tipoCNH.find(tipo) != -1:
             return True
-        else:
-            return False
+        
+        return False
 
     def _setdata(self, data):
         """

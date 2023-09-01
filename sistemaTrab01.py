@@ -37,41 +37,42 @@ motos = [moto1, moto2, moto3]
 
 
 def interface_simplificada():
-    read = 1
-    while read != 0:
-        print("Complete o cadastro para prosseguir!")
-        cliente = Cliente()
-        apto = cliente.registrarCliente()
-        if apto:
-            escolhendo = True
-            while escolhendo:
-                print("\n\n\n")
-                tipoveiculo = int(input("Digite 1 para carro ou 2 para moto: "))
-                i = 1
-                print("Selecione com o número informado a opção desejada\n")
-                if tipoveiculo == 1:
-                    veiculos = carros
-                else:
-                    veiculos = motos
+    print("Complete o cadastro para prosseguir!")
+    cliente = Cliente()
+    apto = cliente.registrarCliente()
+    if apto:
+        escolhendo = True
+        while escolhendo:
+            print("\n\n\n")
+            tipoveiculo = int(input("Digite 1 para carro ou 2 para moto: "))
+            i = 1
+            print("Selecione com o número informado a opção desejada\n")
+            if tipoveiculo == 1:
+                veiculos = carros
+            else:
+                veiculos = motos
 
-                for veiculo in veiculos:
-                    print(f"{i} - {veiculo}: valor R$ {veiculo.getdiaria()}")
-                    i += 1
+            for veiculo in veiculos:
+                print(f"{i} - {veiculo}: valor R$ {veiculo.getdiaria()}")
+                i += 1
 
-                option = int(input("Opção escolhida: "))
-                dias = int(input("Para quantos dias? "))
-                veiculoEscolhido = veiculos[option-1]
-                escolhendo = not(veiculoEscolhido.alugar(cliente, dias))
+            option = int(input("Opção escolhida: "))
+            dias = int(input("Para quantos dias? "))
+            veiculoEscolhido = veiculos[option-1]
+            escolhendo = not(veiculoEscolhido.alugar(cliente, dias))
 
-                if not escolhendo:
-                    print(f"\n\n{veiculoEscolhido}")
-                    print(f"Dia do negócio: {veiculoEscolhido.getdiaAlugada()}")
-                    print(f"Dia de devolução: {veiculoEscolhido.getdiaDevolucao()}\n")
-                    return cliente
+            if not escolhendo:
+                print(f"\n\n{veiculoEscolhido}")
+                print(f"Dia do negócio: {veiculoEscolhido.getdiaAlugada()}")
+                print(f"Dia de devolução: {veiculoEscolhido.getdiaDevolucao()}\n")
+                return cliente
 
-        else:
-            print("Infelizmente não podemos aceitar seu cadastro.")
-            return cliente
+    else:
+        print("Infelizmente não podemos aceitar seu cadastro.")
+        return cliente
 
 
-_clienteNovo = interface_simplificada()
+_clientes = []
+
+for i in range(5):
+    _clientes.append(interface_simplificada())

@@ -36,8 +36,7 @@ class Deck:
         shuffle(self._deck)
 
     def retirarCarta(self):
-        carta = self._deck.pop(0)
-        return carta
+        return self._deck.pop(0)
 
     def devolverCarta(self, carta):
         self._deck.append(carta)
@@ -66,9 +65,20 @@ class Deck:
 
 
 class Player:
-    def __init__(self, nome):
+    def __init__(self, nome, valorpote=0):
         self._name = nome
         self._hand = []
+        self._pote = valorpote
+
+    def apostar(self, valor):
+        if valor <= self._pote:
+            self._pote -= valor
+            return True
+        else:
+            return False
+        
+    def recebeValor(self, valor):
+        self._pote += valor
 
     def comprarCarta(self, deck):
         carta = deck.retirarCarta()
@@ -79,7 +89,3 @@ class Player:
 
     def __str__(self):
         return f"{self._name}: {self._hand}"
-
-
-class Game:
-    pass

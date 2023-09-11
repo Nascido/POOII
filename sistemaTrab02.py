@@ -1,7 +1,4 @@
-from trab02 import Player, Deck
-
-
-baralho = Deck()
+from trab02 import Player, Game
 
 p_rafael = Player("Rafael")
 p_eduardo = Player("Eduardo")
@@ -15,4 +12,5 @@ p_joana = Player("Joana")
 
 players = [p_rafael, p_eduardo, p_marcelo, p_gabriel, p_vitor, p_jose, p_maria, p_fernanda, p_joana]
 
-baralho.distribuir(players, 2)
+jogatina = Game(players)
+jogatina.start()

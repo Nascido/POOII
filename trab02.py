@@ -123,7 +123,7 @@ class Game:
         self._players.append(jogador)
 
     def removerPlayer(self, nome):
-        self._players.pop(nome)
+        self._players.remove(nome)
 
     def jogarPife(self):
         if self._players is None:
@@ -154,7 +154,7 @@ class Game:
                     ready = True
             
             elif n == 9:
-                print(f"Número máximo de jogadores, o jogo pode começar!\n")
+                print("\n Número máximo de Jogadores!")
                 ready = True
             
             else:
@@ -163,8 +163,10 @@ class Game:
                 print("#################################################")
                 print(f"Remova {i} jogador(es) de sua escolha!\n")
                 while n > 9:
+                    x = 1
                     for player in self._players:
-                        print(f"{player.getname} - {i}")
+                        print(f"{x} - {player.getname()}")
+                        x += 1
 
                     option = int(input(" - Nome para retirar: "))
                     self.removerPlayer(self._players[option-1])
@@ -172,13 +174,42 @@ class Game:
 
             n = len(self._players)
 
+        print("###################################################")
+        print(f"O jogo pode começar!\n")
         self._deck = Deck(decks=2)
         self._deck.distribuir(self._players, 9)
 
     def getdeck(self):
         return self._deck.getdeck()
 
+    def getplayers(self):
+        return self._players
+
     def __str__(self):
         n = len(self._players)
         i = self._deck.get_number_of_decks()
         return f"Jogo {self._game}: {n} pessoas e {i} deck(s)"
+
+
+p_rafael = Player("Rafael")
+p_eduardo = Player("Eduardo")
+p_marcelo = Player("Marcelo")
+p_gabriel = Player("Gabriel")
+p_vitor = Player("Vitor")
+p_jose = Player("José")
+p_maria = Player("Maria")
+p_fe = Player("Fernanda")
+p_joana = Player("Joana")
+f_fulano = Player("Fulano")
+f_ciclano = Player("Ciclano")
+
+inscritos = [p_rafael, p_eduardo, p_marcelo, f_ciclano, f_fulano, p_gabriel, p_vitor, p_jose, p_maria, p_fe, p_joana]
+
+jogatina = Game(inscritos)
+jogatina.start()
+
+lista_final = jogatina.getplayers()
+
+print("\nMãos dos jogadores:")
+for pessoa in lista_final:
+    print(pessoa)

@@ -75,20 +75,9 @@ class Deck:
 
 
 class Player:
-    def __init__(self, nome, valorpote=0):
+    def __init__(self, nome):
         self._name = nome
         self._hand = []
-        self._pote = valorpote
-
-    def apostar(self, valor):
-        if valor <= self._pote:
-            self._pote -= valor
-            return True
-        else:
-            return False
-        
-    def recebeValor(self, valor):
-        self._pote += valor
 
     def comprarCarta(self, deck):
         carta = deck.retirarCarta()
@@ -128,11 +117,12 @@ class Game:
     def jogarPife(self):
         if self._players is None:
             n = 0
+            self._players = []
         else:
             n = len(self._players)
 
         ready = False
-        print("#################################################")
+        print("\n#################################################")
         print(f" {n} jogadores inscritos!\n")
 
         while not ready:
@@ -158,12 +148,12 @@ class Game:
                 ready = True
             
             else:
-                print(f"\nNúmero máximo de jogadores excedido!")
+                print(f"\nNúmero máximo de jogadores excedido!\n")
                 i = n-9
-                print("#################################################")
-                print(f"Remova {i} jogador(es) de sua escolha!\n")
+                print(f"Remova {i} jogador(es) de sua escolha!")
                 while n > 9:
                     x = 1
+                    print("\n-----------------------------------------------------")
                     for player in self._players:
                         print(f"{x} - {player.getname()}")
                         x += 1
@@ -174,10 +164,11 @@ class Game:
 
             n = len(self._players)
 
-        print("###################################################")
-        print(f"O jogo pode começar!\n")
         self._deck = Deck(decks=2)
         self._deck.distribuir(self._players, 9)
+        print("\n###################################################")
+        print(self)
+        print(f"\nO jogo pode começar!\n")
 
     def getdeck(self):
         return self._deck.getdeck()
@@ -203,13 +194,14 @@ p_joana = Player("Joana")
 f_fulano = Player("Fulano")
 f_ciclano = Player("Ciclano")
 
-inscritos = [p_rafael, p_eduardo, p_marcelo, f_ciclano, f_fulano, p_gabriel, p_vitor, p_jose, p_maria, p_fe, p_joana]
+inscritos = [p_rafael, p_eduardo, p_marcelo, p_gabriel, p_vitor, p_jose, p_maria, p_fe, p_joana, f_ciclano, f_fulano]
 
 jogatina = Game(inscritos)
 jogatina.start()
 
 lista_final = jogatina.getplayers()
 
-print("\nMãos dos jogadores:")
+print("\nMãos dos jogadores:\n")
 for pessoa in lista_final:
     print(pessoa)
+    print("\n")

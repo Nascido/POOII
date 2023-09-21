@@ -104,7 +104,7 @@ class Game:
         pass
 
 
-class Table:
+class Blackjack(Game):
     pass
 
 

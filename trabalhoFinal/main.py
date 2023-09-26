@@ -1,10 +1,10 @@
 from random import shuffle
 
 
-class Member:
-    def __init__(self) -> None:
-        self._id = ''
-        self._hand = ['']
+class Player:
+    def __init__(self, nome):
+        self._name = nome
+        self._hand = []
 
     def comprarCarta(self, deck):
         carta = deck.retirarCarta()
@@ -12,6 +12,12 @@ class Member:
 
     def jogarCarta(self, indexCarta):
         return self._hand.pop(indexCarta)
+    
+    def getname(self):
+        return self._name
+
+    def __str__(self):
+        return f"{self._name}: {self._hand}"
 
 
 class Deck:
@@ -80,17 +86,8 @@ class Deck:
         return f"Baralho {self._tipo} {joker} coringa: {cartas} cartas"
 
 
-class Player(Member):
-    def getname(self):
-        return self._id
-
-    def __str__(self):
-        return f"{self._id}: {self._hand}"
-
-
-class Dealer(Member):
+class Card:
     pass
-
 
 class Game:
     def __init__(self) -> None:
@@ -104,7 +101,7 @@ class Game:
         pass
 
 
-class Table:
+class Blackjack(Game):
     pass
 
 

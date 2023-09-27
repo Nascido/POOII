@@ -14,6 +14,34 @@ class Member:
         return self._hand.pop(indexCarta)
 
 
+class Player(Member):
+    def getname(self):
+        return self._id
+
+    def __str__(self):
+        return f"{self._id}: {self._hand}"
+
+
+class Dealer(Member):
+    pass
+
+
+class Game:
+    def __init__(self) -> None:
+        self._game = None
+        self._players = None
+
+    def getplayers(self):
+        return self._players
+
+    def __str__(self):
+        pass
+
+
+class Blackjack(Game):
+    pass
+
+
 class Deck:
     def __init__(self, decks=1, joker=False, tipo="normal"):
         super().__init__()
@@ -78,34 +106,6 @@ class Deck:
             joker = "sem"
 
         return f"Baralho {self._tipo} {joker} coringa: {cartas} cartas"
-
-
-class Player(Member):
-    def getname(self):
-        return self._id
-
-    def __str__(self):
-        return f"{self._id}: {self._hand}"
-
-
-class Dealer(Member):
-    pass
-
-
-class Game:
-    def __init__(self) -> None:
-        self._game = None
-        self._players = None
-
-    def getplayers(self):
-        return self._players
-
-    def __str__(self):
-        pass
-
-
-class Blackjack(Game):
-    pass
 
 
 class Interface:

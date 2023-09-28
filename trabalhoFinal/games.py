@@ -1,4 +1,6 @@
 
+from decks import Deck
+
 class Player:
     def __init__(self, nome):
         self._name = nome
@@ -17,6 +19,20 @@ class Player:
 
     def __str__(self):
         return f"{self._name}: {self._hand}"
+    
 
-class Interface:
+class Game:
+    def __init__(self) -> None:
+        self._game = None
+        self._players = None
+
+    def getplayers(self):
+        return self._players
+
+    def __str__(self):
+        pass
+
+
+class Blackjack(Game):
     pass
+

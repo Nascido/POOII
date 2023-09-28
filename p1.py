@@ -12,7 +12,8 @@ class User:
 
     # Cadastro do Usuário
     def cadastro(self):
-        print("#################################################################")
+        print("\n\n#################################################################")
+        print("---- Cadastro de Usuário ----")
         self._nome = input("Nome de Usuário: ")
         self._cpf = input("CPF: ")
         self._senha = input("Crie uma senha: ")
@@ -59,10 +60,10 @@ class Staff(User):
         super().__init__(nome, cpf, senha)
 
     # Manipular Estoque
-    def addproduto(self, stock, produto):
+    def adicionaProduto(self, stock, produto):
         pass
 
-    def removeproduto(self, stock, produto):
+    def removeProduto(self, stock, produto):
         pass
 
     # Manipular Produto
@@ -81,5 +82,16 @@ class Stock:
 
 
 class Product:
-    def __int__(self):
-        pass
+    def __int__(self, nome='', valor=0, setorDoProduto=0):
+        self._nome = nome
+        self._valor = valor
+        self._setor = setorDoProduto
+
+        self._barcode = 0
+
+    def registrarProduto(self):
+        print("\n\n#################################################")
+        print("----- Registro de um novo Produto -----\n")
+        self._nome = input("Nome do Produto: ")
+        self._valor = int(input("Preço por unidade: "))
+        self._setor = input("Qual o setor do produto: ")

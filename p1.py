@@ -1,5 +1,7 @@
 """
-Sistema de Estoque e cliente fidelidade
+Sistema de Estoque:
+
+Progama de estoque de um Supermercado
 
 """
 
@@ -78,7 +80,37 @@ class Staff(User):
 
 
 class Stock:
-    pass
+    def __init__(self, produtos=None, clientes=None, funcionarios=None, unidade='centro'):
+        # Localidade do Estoque
+        self._unidade = unidade
+
+        # Produtos e usuários
+        self._clients = clientes
+        self._staff = funcionarios
+        self._products = produtos
+
+        # Setores dos produtos
+
+        self._mercearia = []   # Setor 1
+        self._frios = []       # Setor 2
+        self._laticinios = []  # Setor 3
+        self._bebidas = []     # Setor 4
+        self._higiene = []     # Setor 5
+
+        # Reservas dos Clientes
+        self._reservados = []
+
+        self._data = [self._products, self._staff, self._clients]
+
+        for resgistro in self._data:
+            if resgistro is None:
+                resgistro = []
+
+    def addclient(self, cliente):
+        self._clients.append(cliente)
+
+    def addstaff(self, funcionario):
+        self._staff.append(funcionario)
 
 
 class Product:
@@ -91,7 +123,7 @@ class Product:
 
     def registrarProduto(self):
         print("\n\n#################################################")
-        print("----- Registro de um novo Produto -----\n")
+        print("----- Registro de Produto -----\n")
         self._nome = input("Nome do Produto: ")
         self._valor = int(input("Preço por unidade: "))
         self._setor = input("Qual o setor do produto: ")

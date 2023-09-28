@@ -1,6 +1,7 @@
 
 from decks import Deck
 
+
 class Player:
     def __init__(self, nome):
         self._name = nome
@@ -35,4 +36,3 @@ class Game:
 
 class Blackjack(Game):
     pass
-

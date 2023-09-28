@@ -70,4 +70,3 @@ class Deck:
 
 class Card:
     pass
-

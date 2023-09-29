@@ -203,7 +203,7 @@ class Produto:        # A classe que define o que um produto deve ter para ficar
         self._quantidade = quantidade
 
     def __str__(self):
-        return f"{self._nome}({self._marca}): R$ {self._valor} [ESTOQUE: {self._quantidade}]"
+        return f"{self._nome}({self._marca}): R$ {self._valor} [UNIDADES: {self._quantidade}]"
 
 
 class Interface:     # Classe com a função de expor graficamente o sistema

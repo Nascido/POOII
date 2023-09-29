@@ -1,0 +1,25 @@
+Manual de Inicialização:
+
+    1 - Rode o aqrquivo (sistemaP1) no mesmo diretório dos outros arquivos, sendo os
+    ".txt" os bancos iniciais de dados e o arquivo supermercado.py sendo o retentor das classes.
+
+
+    2 - Após a inicialização, você poderá escolher 3 opções para acessar o sistema:
+    Caso queira testar todas as opções
+
+       * LOGIN Cliente Já Registrado => CPF: 123  senha: 123
+
+       * LOGIN Funcionário Autorizado Já registrado => CPF: 321   senha: 321
+
+       * CADASTRO => Apenas Seguir as opções apresentadas
+
+
+    3 - Após entrar, verá qual usuário está selecionado no começo da tela e uma lista de
+    produtos com seus nomes, marcas, valores, e quantidades no estoque apresentadas em uma linha.
+
+
+    4 - Dependendo do login efetuado, aparecerá se você quer interagir com os produtos listados.
+    Siga as instruções mostradas no console e verifique todas as mensagens printadas.
+
+
+    5 - Tudo para rodar e interagir com o sistema está contido neste Folder.

@@ -6,7 +6,7 @@ Progama de estoque de um Supermercado
 """
 
 
-class User:
+class User:                     # Esta classe engloba o registro no sistema, comum para clientes e Staff
     def __init__(self, nome, cpf, senha):
         self._nome = nome
         self._cpf = cpf
@@ -26,15 +26,17 @@ class User:
         return [self._nome, self._cpf, self._senha]
 
 
-class Cliente(User):
+class Cliente(User):           # O objeto cliente pode ser criado a partir da leitura do arquivo clientes ou Cadastrado
     def __init__(self, nome='', cpf=00000000000, senha='cliente123'):
         super().__init__(nome, cpf, senha)
         # Itens reservados do cliente
         self._reservas = []
 
+    # Método para concluir a reserva de um produto
     def reservarProduto(self, produto):
         self._reservas.append(produto)
 
+    # Getters
     def getreservas(self):
         return self._reservas
 
@@ -42,15 +44,16 @@ class Cliente(User):
         return f"Cliente {self._nome}"
 
 
-class Staff(User):
+class Staff(User):        # A classe Staff serve apenas para reservar manipulações para apenas objetos desse tipo
     def __init__(self, nome='', cpf=0, senha='staff123'):
         super().__init__(nome, cpf, senha)
+        self._cargo = "Administradores de Estoque"
 
     def __str__(self):
         return f"Funcionário {self._nome}"
 
 
-class Estoque:
+class Estoque:          # A classe Estoque engloba os produtos e os usuários que podem vê-los
     def __init__(self, produtos=None, clientes=None, funcionarios=None):
 
         # Produtos e usuários
@@ -69,7 +72,7 @@ class Estoque:
         # Reservas dos Clientes
         self._reservas = []
 
-    # Organizar Estoque
+    # Organizar produtos em seus setores
     def organizarSetores(self):
 
         self._mercearia = []  # Setor 0
@@ -126,7 +129,7 @@ class Estoque:
         return self._reservas
 
 
-class Produto:
+class Produto:        # A classe que define o que um produto deve ter para ficar em estoque
     def __init__(self, nome='', marca='', valor=0, setorDoProduto=0, quantidade=0):
         # Informações do produto
         self._nome = nome
@@ -139,14 +142,16 @@ class Produto:
 
         self.disponibilidade()
 
+    # Registrar Produto pelo Console
     def registrarProduto(self):
         print("\n\n#################################################")
         print("----- Registro de Produto -----\n")
         self._nome = input("Nome do Produto: ")
-        self._valor = int(input("Preço por unidade: "))
-        self._setor = input("Qual o setor do produto: ")
-        self._quantidade = input("Unidades no Estoque: ")
+        self._valor = float(input("Preço por unidade: "))
+        self._setor = int(input("Qual o setor do produto: "))
+        self._quantidade = int(input("Unidades no Estoque: "))
 
+    # Definir Status de disponibilidade para Clientes
     def disponibilidade(self):
         if self._quantidade <= 0 or self._valor <= 0:
             self._status = 'indisponível'
@@ -199,15 +204,17 @@ class Produto:
         return f"{self._nome}({self._marca}): R$ {self._valor} [ESTOQUE: {self._quantidade}]"
 
 
-class Interface:
+class Interface:     # Classe com a função de expor graficamente o sistema
     def __init__(self, produtos=None, clientes=None, funcionarios=None):
         # Atributos ativos e em uso
         self.estoque = Estoque(produtos, clientes, funcionarios)
         self.usuario = None
 
+        # Usuários Disponíveis
         self._clientes = self.estoque.getclientes()
         self._staff = self.estoque.getstaff()
 
+    # Tela Inicial
     def iniciar(self):
         print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n")
         print("Bem vindo ao mercado SUPERDINO!")
@@ -227,6 +234,7 @@ class Interface:
             case _:
                 self.telaLogin('FUNCIONÁRIO')
 
+    # Login de Usuários Registrados
     def telaLogin(self, usuario):
         if usuario == 'CLIENTE':
             usuariosPermitidos = self._clientes
@@ -257,6 +265,7 @@ class Interface:
         self.iniciar()
         return 0
 
+    # Cadastro de Clientes novos
     def telaCadastro(self):
         print("\n\n########################################")
         print("CADASTRO DE CLIENTE")
@@ -284,6 +293,7 @@ class Interface:
 
         self.produtosEstoque()
 
+    # Estoque de Produtos
     def produtosEstoque(self):
         setores = self.estoque.getsetores()
         print("\n\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
@@ -312,6 +322,7 @@ class Interface:
         else:
             self.clienteoptions(produtosDisponiveis)
 
+    # Opções disponíveis apenas para staff
     def staffoptions(self, produtosIndisponiveis, produtosDisponiveis):
         print("\n\nPRODUTOS INDISPONÍVEIS PARA CLIENTES:\n")
         i = 1
@@ -376,6 +387,7 @@ class Interface:
             input("Pressione qualquer tecla para voltar ao Início ...")
             self.iniciar()
 
+    # Opções para clientes
     def clienteoptions(self, produtosDisponiveis):
         resposta = input("\n\n\nDeseja reservar algum produto?( y / n )")
         if resposta == 'y':
@@ -400,7 +412,7 @@ class Interface:
                 self.produtosEstoque()
 
             else:
-                print("O valor de unidades inválido")
+                print("\n\n\nValor de unidades inválido!!!\n\n\n")
                 self.clienteoptions(produtosDisponiveis)
                 return
 

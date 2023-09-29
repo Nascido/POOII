@@ -12,14 +12,6 @@ class User:
         self._cpf = cpf
         self._senha = senha
 
-    # Cadastro do Usuário
-    def cadastro(self):
-        print("\n\n#################################################################")
-        print("---- Cadastro de Usuário ----")
-        self._nome = input("Nome de Usuário: ")
-        self._cpf = input("CPF: ")
-        self._senha = input("Crie uma senha: ")
-
     # Getters
     def getname(self):
         return self._nome
@@ -51,23 +43,6 @@ class Staff(User):
     def __init__(self, nome='', cpf=0, senha='staff123'):
         super().__init__(nome, cpf, senha)
 
-    # Manipular Estoque
-    def adicionaProduto(self, stock, produto):
-        pass
-
-    def removeProduto(self, stock, produto):
-        pass
-
-    # Manipular Produto
-    def setNomeProduto(self, produto, nome):
-        pass
-
-    def setQuantidade(self, produto, value):
-        pass
-
-    def setValorProduto(self, produto, value):
-        pass
-
     def __str__(self):
         return f"Funcionário {self._nome}"
 
@@ -93,6 +68,12 @@ class Estoque:
 
     # Organizar Estoque
     def organizarSetores(self):
+
+        self._mercearia = []  # Setor 0
+        self._frios = []  # Setor 1
+        self._laticinios = []  # Setor 2
+        self._bebidas = []  # Setor 3
+
         for produto in self._produtos:
             setor = produto.getsetor()
             match setor:
@@ -114,18 +95,23 @@ class Estoque:
 
         self._clients.append(cliente)
 
+    # Manipular produtos
     def addproduto(self, produto):
         if self._produtos is None:
-            self._products = []
+            self._produtos = []
 
-        self._products.append(produto)
+        self._produtos.append(produto)
+
+    def removeproduto(self, produto):
+        self._produtos.remove(produto)
 
     # Getters
     def getsetores(self):
+        self.organizarSetores()
         return self._mercearia, self._frios, self._laticinios, self._bebidas
 
     def getprodutos(self):
-        return self._products
+        return self._produtos
 
     def getclientes(self):
         return self._clients
@@ -159,7 +145,7 @@ class Produto:
         self._quantidade = input("Unidades no Estoque: ")
 
     def disponibilidade(self):
-        if self._quantidade <= 0:
+        if self._quantidade <= 0 or self._valor <= 0:
             self._status = 'indisponível'
             return False
 
@@ -186,6 +172,22 @@ class Produto:
     def getstatus(self):
         self.disponibilidade()
         return self._status
+
+    # Setters
+    def setnome(self, nome):
+        self._nome = nome
+
+    def setmarca(self, marca):
+        self._marca = marca
+
+    def setvalor(self, valor):
+        self._valor = valor
+
+    def setsetor(self, setor):
+        self._setor = setor
+
+    def setquantidade(self, quantidade):
+        self._quantidade = quantidade
 
     def __str__(self):
         return f"{self._nome}({self._marca}): R$ {self._valor} [ESTOQUE: {self._quantidade}]"
@@ -279,6 +281,7 @@ class Interface:
     def produtosEstoque(self):
         setores = self.estoque.getsetores()
         print("\n\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+        print(f"Usuário Logado: {self.usuario}")
         print("PRODUTOS EM ESTOQUE:\n")
         i = 1
         j = 0
@@ -296,3 +299,75 @@ class Interface:
 
                 else:
                     produtosIndisponiveis.append(produto)
+
+        if type(self.usuario) == Staff:
+            self.staffoptions(produtosIndisponiveis, produtosDisponiveis)
+
+        else:
+            self.clienteoptions(produtosDisponiveis)
+
+    def staffoptions(self, produtosIndisponiveis, produtosDisponiveis):
+        print("\n\nPRODUTOS INDISPONÍVEIS PARA CLIENTES:\n")
+        i = 1
+        for produto in produtosIndisponiveis:
+            print(f"{i} - {produto}")
+            i += 1
+
+        resposta = input("\n\n\nDeseja alterar algum produto?( y / n ) ")
+        if resposta == 'y':
+            print("Qual produto deseja alterar?")
+            print("0 - DISPONÍVEIS")
+            print("1 - INDISPONÍVEIS")
+            op = int(input("Opção: "))
+
+            if op == 0:
+                produtos = produtosDisponiveis
+            else:
+                produtos = produtosIndisponiveis
+
+            item = int(input("Qual item deseja alterar?: ")) - 1
+
+            produto = produtos[item]
+            print("\n\n########################################################")
+            print(f"MENU DE ALTERAÇÃO: item - {produto}\n")
+            print("O que deseja fazer?:\n\n"
+                  "0 - Alterar Nome\n"
+                  "1 - Alterar Marca\n"
+                  "2 - Alterar Preço\n"
+                  "3 - Alterar Setor\n"
+                  "4 - Alterar Quantidade no Estoque\n"
+                  "5 - Remover do Estoque\n")
+
+            op = int(input("Opção: "))
+            match op:
+                case 0:
+                    nome = input("\nNome do Produto: ")
+                    produto.setnome(nome)
+
+                case 1:
+                    marca = input("\nMarca do Produto: ")
+                    produto.setnome(marca)
+
+                case 2:
+                    valor = input("\nValor do Produto: ")
+                    produto.setvalor(float(valor))
+
+                case 3:
+                    setor = input("\nSetor do Produto: ")
+                    produto.setsetor(int(setor))
+
+                case 4:
+                    quantidade = input("\nQuantidade em Estoque: ")
+                    produto.setquantidade(int(quantidade))
+
+                case 5:
+                    self.estoque.removeproduto(produto)
+
+            print("Atualizando Estoque ...")
+            self.produtosEstoque()
+
+        else:
+            return
+
+    def clienteoptions(self, produtosDisponiveis):
+        pass

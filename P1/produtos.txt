@@ -1,4 +1,4 @@
-Arroz/CAMIL/9.99/0/25
+Arroz/CAMIL/2.59/0/25
 Feijão Preto/CAMIL/5.99/0/20
 Macarrão Espaguete/PASTIFICIO/3.49/0/14
 Salame/SADIA/19.99/0/12
@@ -11,11 +11,11 @@ Batata Frita/SADIA/16.89/1/23
 Lasanha/SEARA/12.99/1/29
 Mortadela/PERDIGAO/5.99/1/16
 Pizza Calabresa/SEARA/10.59/1/10
-Leite Desnatado/PARMALATE/4.99/2/12
+Leite Desnatado/PARMALATE/4.99/2/0
 Leite Integral/PARMALATE/4.98/2/12
 Yogurte/GREGO/10.97/2/10
 Requeijão/BOAVIDA/8.98/2/10
-Refrigerante Normal/COCACOLA/4.99/3/23
+Refrigerante Normal/COCACOLA/0/3/23
 Refrigerante Normal/FANTA/3.99/3/12
 Suco de Uva/CAMPOLARGO/8.99/3/20
 Água Mineral/CRYSTAL/2.49/3/30

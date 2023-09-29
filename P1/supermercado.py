@@ -30,13 +30,16 @@ class Cliente(User):
     def __init__(self, nome='', cpf=00000000000, senha='cliente123'):
         super().__init__(nome, cpf, senha)
         # Itens reservados do cliente
-        self._itens = []
+        self._reservas = []
 
     def reservarProduto(self, produto):
-        self._itens.append(produto)
+        self._reservas.append(produto)
+
+    def getreservas(self):
+        return self._reservas
 
     def __str__(self):
-        return f"Cliente: {self._nome}"
+        return f"Cliente {self._nome}"
 
 
 class Staff(User):
@@ -172,6 +175,9 @@ class Produto:
     def getstatus(self):
         self.disponibilidade()
         return self._status
+
+    def getdata(self):
+        return self._nome, self._marca, self._valor, self._setor
 
     # Setters
     def setnome(self, nome):
@@ -367,7 +373,37 @@ class Interface:
             self.produtosEstoque()
 
         else:
-            return
+            input("Pressione qualquer tecla para voltar ao Início ...")
+            self.iniciar()
 
     def clienteoptions(self, produtosDisponiveis):
-        pass
+        resposta = input("\n\n\nDeseja reservar algum produto?( y / n )")
+        if resposta == 'y':
+            item = int(input("\nSelecione o número do Item: "))-1
+            produto = produtosDisponiveis[item]
+            unidades = int(input("Quantas Unidades deseja reservar? "))
+            quantidade = produto.getquantidade()
+            if 1 <= unidades <= quantidade:
+                nome, marca, valor, setor = produto.getdata()
+                produtoReservado = Produto(nome, marca, valor, setor, unidades)
+                self.usuario.reservarProduto(produtoReservado)
+                novaquantidade = produto.getquantidade() - unidades
+                produto.setquantidade(novaquantidade)
+                print("\n\nReserva Concluida!\n")
+                print("Lista de Reservas do Cliente:")
+                reservas = self.usuario.getreservas()
+                i = 1
+                for reserva in reservas:
+                    print(f"{i} - {reserva}")
+                    i += 1
+
+                self.produtosEstoque()
+
+            else:
+                print("O valor de unidades inválido")
+                self.clienteoptions(produtosDisponiveis)
+                return
+
+        else:
+            input("Pressione qualquer tecla para voltar ao Início ...")
+            self.iniciar()

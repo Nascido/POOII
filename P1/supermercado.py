@@ -1,7 +1,9 @@
 """
-Sistema de Estoque:
+Sistema de Estoque de um SuperMercado:
 
-Progama de estoque de um Supermercado
+ - 6 Classes no total;
+ - 1 classe mãe e 2 filhas;
+ - 1 classe de visualização no console.
 
 """
 

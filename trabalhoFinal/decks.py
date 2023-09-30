@@ -3,29 +3,19 @@ from random import shuffle
 
 
 class Deck:
-    def __init__(self, decks=1, joker=False, tipo="normal"):
-        super().__init__()
-        self._nipes = ['♠', '♣', '♥', '♦']
+    def __init__(self, decks=1, blackjack=False):
+        self._nipes = ['espadas', 'paus', 'copas', 'ouros']
         self._num = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
         self._deck = []
-        self._joker = joker
-        self._tipo = tipo
         self._numberOfDecks = decks
         for i in range(decks):
-            self._gerarDeck()
+            self._gerarDeck(blackjack)
 
-    def _gerarDeck(self):
-        foradoTruco = ['8', '9', '10']
+    def _gerarDeck(self, blackjack):
         for nipe in self._nipes:
             for num in self._num:
-                if self._tipo == "espanhol":
-                    if num not in foradoTruco:
-                        self._deck.append((num, nipe))
-                else:
-                    self._deck.append((num, nipe))
-        if self._joker:
-            for i in range(2):
-                self._deck.append("Joker")
+                self._deck.append(Card(num, nipe, blackjack))
+
 
     def embaralhar(self):
         shuffle(self._deck)
@@ -57,16 +47,74 @@ class Deck:
     def get_number_of_decks(self):
         return self._numberOfDecks
 
-    def __str__(self):
-        cartas = len(self._deck)
-
-        if self._joker:
-            joker = "com"
-        else:
-            joker = "sem"
-
-        return f"Baralho {self._tipo} {joker} coringa: {cartas} cartas"
-    
 
 class Card:
-    pass
+    def __init__(self, tipo, nipe, blackjack=False, valor=None, altvalor=None):
+        # Como identificar a carta
+        self._tipo = tipo
+        self._nipe = nipe
+
+        # Qual o seu valor atribuido
+        self._originvalor = valor
+        self._altvalor = altvalor
+
+        self._valor = self._originvalor
+
+        if self._valor is None:
+            self.atribuirvalor(blackjack)
+
+    def atribuirvalor(self, blackjack=False):
+        if blackjack:
+            valorCartaAlta = 10
+            valorAlternativo = None
+            match self._tipo:
+                case "J":
+                    valorComum = valorCartaAlta
+                case "Q":
+                    valorComum = valorCartaAlta
+                case "K":
+                    valorComum = valorCartaAlta
+                case "A":
+                    valorComum = valorCartaAlta
+                    valorAlternativo = 1
+                case _:
+                    valorComum = int(self._tipo)
+
+        else:
+            match self._tipo:
+                case "J":
+                    valorComum = 11
+                case "Q":
+                    valorComum = 12
+                case "K":
+                    valorComum = 13
+                case "A":
+                    valorComum = 14
+                    valorAlternativo = 1
+                case _:
+                    valorComum = int(self._tipo)
+
+        self._originvalor = valorComum
+        self._altvalor = valorAlternativo
+
+    def valorAlternativo(self):
+        self._valor = self
+
+    # Getters
+    def gettipo(self):
+        return self._tipo
+
+    def getnipe(self):
+        return self._nipe
+
+    def getvalor(self):
+        return self._valor
+
+    def getaltvalor(self):
+        return self._altvalor
+
+    def __int__(self):
+        return self._valor
+
+    def __str__(self):
+        return f"{self._tipo} de {self._nipe} "

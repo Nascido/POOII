@@ -25,7 +25,7 @@ class User:                     # Esta classe engloba o registro no sistema, com
         return self._senha
 
     def getuserinfo(self):
-        return [self._nome, self._cpf, self._senha]
+        return self._nome, self._cpf, self._senha
 
 
 class Cliente(User):           # O objeto cliente pode ser criado a partir da leitura do arquivo clientes ou Cadastrado
@@ -103,13 +103,18 @@ class Estoque:          # A classe Estoque engloba os produtos e os usuários qu
 
         self._clients.append(cliente)
 
+        nome, cpf, senha = cliente.getuserinfo()
+
+        with open("clientes.txt", 'a') as file:
+            file.write(f"\n{nome}/{cpf}/{senha}")
+
     # Manipular produtos
     def addproduto(self, produto):
         if self._produtos is None:
             self._produtos = []
 
         self._produtos.append(produto)
-
+        
     def removeproduto(self, produto):
         self._produtos.remove(produto)
 
@@ -149,9 +154,15 @@ class Produto:        # A classe que define o que um produto deve ter para ficar
         print("\n\n#################################################")
         print("----- Registro de Produto -----\n")
         self._nome = input("Nome do Produto: ")
+        self._marca = input("Marca do Produdo: ")
         self._valor = float(input("Preço por unidade: "))
         self._setor = int(input("Qual o setor do produto: "))
         self._quantidade = int(input("Unidades no Estoque: "))
+        self.disponibilidade()
+
+        with open("produtos.txt", 'a') as file:
+            file.write(f"\n{self._nome}/{self._marca}/{self._valor}/{self._setor}/{self._quantidade}")
+
 
     # Definir Status de disponibilidade para Clientes
     def disponibilidade(self):
@@ -386,8 +397,18 @@ class Interface:     # Classe com a função de expor graficamente o sistema
             self.produtosEstoque()
 
         else:
-            input("Pressione qualquer tecla para voltar ao Início ...")
-            self.iniciar()
+            resposta = input("Deseja registrar um novo produto ao estoque?( y / n )")
+            if resposta == 'y':
+                produto = Produto()
+                produto.registrarProduto()
+                self.estoque.addproduto(produto)
+                
+                print("Atualizando Estoque ...")
+                self.produtosEstoque()
+
+            else:
+                input("Pressione qualquer tecla para voltar ao Início ...")
+                self.iniciar()
 
     # Opções para clientes
     def clienteoptions(self, produtosDisponiveis):

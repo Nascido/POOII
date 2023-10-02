@@ -16,7 +16,6 @@ class Deck:
             for num in self._num:
                 self._deck.append(Card(num, nipe, blackjack))
 
-
     def embaralhar(self):
         shuffle(self._deck)
 
@@ -49,24 +48,26 @@ class Deck:
 
 
 class Card:
-    def __init__(self, tipo, nipe, blackjack=False, valor=None, altvalor=None):
+    def __init__(self, tipo, nipe, blackjack=False, valor=None, altvalor=None, setalt=False):
         # Como identificar a carta
         self._tipo = tipo
         self._nipe = nipe
 
         # Qual o seu valor atribuido
-        self._originvalor = valor
-        self._altvalor = altvalor
+        self._valorOriginal = valor
+        self._valorAlternado = altvalor
+        self._valor = None
 
-        self._valor = self._originvalor
+        # Como ela está valendo
+        self.alt = setalt
 
         if self._valor is None:
             self.atribuirvalor(blackjack)
 
     def atribuirvalor(self, blackjack=False):
+        valorCartaAlta = 10
+        valorAlternativo = None
         if blackjack:
-            valorCartaAlta = 10
-            valorAlternativo = None
             match self._tipo:
                 case "J":
                     valorComum = valorCartaAlta
@@ -94,11 +95,23 @@ class Card:
                 case _:
                     valorComum = int(self._tipo)
 
-        self._originvalor = valorComum
-        self._altvalor = valorAlternativo
+        self._valorOriginal = valorComum
+        self._valorAlternado = valorAlternativo
+        self.verifalt()
 
-    def valorAlternativo(self):
-        self._valor = self
+    def verifalt(self):
+        if self.alt:
+            self._valor = self._valorAlternado
+        else:
+            self._valor = self._valorOriginal
+
+    def shiftValor(self):
+        if self.alt:
+            self.alt = False
+        else:
+            self.alt = True
+
+        self.verifalt()
 
     # Getters
     def gettipo(self):
@@ -111,7 +124,7 @@ class Card:
         return self._valor
 
     def getaltvalor(self):
-        return self._altvalor
+        return self._valorAlternado
 
     def __int__(self):
         return self._valor

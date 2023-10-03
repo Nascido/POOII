@@ -1,13 +1,12 @@
 
-from games import Player, Game, Blackjack
-from decks import Deck, Card
+from decks import Deck
 
 """
     Sistema de Casino - POOII 
 """
 
-baralho = Deck()
+baralho = Deck(blackjack=True)
 
 baralho.embaralhar()
 
-carta = baralho.retirarCarta()
+card = baralho.retirarCarta

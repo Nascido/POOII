@@ -40,11 +40,11 @@ class Deck:
     def getdeck(self):
         return self._deck
 
-    def get_number_of_cards(self):
+    def __len__(self):
         return len(self._deck)
 
-    def get_number_of_decks(self):
-        return self._numberOfDecks
+    def __str__(self):
+        return f"{self._numberOfDecks} deck(s)"
 
 
 class Card:
@@ -59,7 +59,7 @@ class Card:
         self._valor = None
 
         # Como ela está valendo
-        self.alt = setalt
+        self.__alt = setalt
 
         if self._valor is None:
             self.atribuirvalor(blackjack)
@@ -100,18 +100,19 @@ class Card:
         self.verifalt()
 
     def verifalt(self):
-        if self.alt:
+        if self.__alt:
             self._valor = self._valorAlternado
         else:
             self._valor = self._valorOriginal
 
     def shiftValor(self):
-        if self.alt:
-            self.alt = False
+        if self.__alt:
+            self.__alt = False
+            self.verifalt()
         else:
-            self.alt = True
-
-        self.verifalt()
+            if self._valorAlternado is not None:
+                self.__alt = True
+                self.verifalt()
 
     # Getters
     def gettipo(self):

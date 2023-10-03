@@ -21,3 +21,4 @@ Suco de Uva/CAMPOLARGO/8.99/3/20
 Água Mineral/CRYSTAL/2.49/3/30
 Cerveja/PETRA/3.99/3/24
 Vinho Tinto/CASABLANCA/19.99/3/22
+Bolo Cuca/BELUDO/12.99/0/10

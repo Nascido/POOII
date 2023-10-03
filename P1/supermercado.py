@@ -163,7 +163,6 @@ class Produto:        # A classe que define o que um produto deve ter para ficar
         with open("produtos.txt", 'a') as file:
             file.write(f"\n{self._nome}/{self._marca}/{self._valor}/{self._setor}/{self._quantidade}")
 
-
     # Definir Status de disponibilidade para Clientes
     def disponibilidade(self):
         if self._quantidade <= 0 or self._valor <= 0:

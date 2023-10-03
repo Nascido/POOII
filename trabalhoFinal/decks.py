@@ -105,7 +105,7 @@ class Card:
         else:
             self._valor = self._valorOriginal
 
-    def shiftValor(self):
+    def shift(self):
         if self.__alt:
             self.__alt = False
             self.verifalt()
@@ -113,6 +113,8 @@ class Card:
             if self._valorAlternado is not None:
                 self.__alt = True
                 self.verifalt()
+
+        return self._valor
 
     # Getters
     def gettipo(self):

@@ -9,4 +9,4 @@ baralho = Deck(blackjack=True)
 
 baralho.embaralhar()
 
-card = baralho.retirarCarta
+card = baralho.retirarCarta()

@@ -4,33 +4,34 @@ from random import shuffle
 
 class Deck:
     def __init__(self, decks=1, blackjack=False):
-        self._nipes = ['espadas', 'paus', 'copas', 'ouros']
-        self._num = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+        self.__nipes = ['ouros', 'copas', 'espadas', 'paus']
+        self.__num = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+        self.__numberOfDecks = decks
         self._deck = []
-        self._numberOfDecks = decks
+
         for i in range(decks):
-            self._gerarDeck(blackjack)
+            self.__gerarDeck(blackjack)
 
-    def _gerarDeck(self, blackjack):
-        for nipe in self._nipes:
-            for num in self._num:
-                self._deck.append(Card(num, nipe, blackjack))
+    def __gerarDeck(self, blackjack):
+        for nipe in self.__nipes:
+            for num in self.__num:
+                self.append(Card(num, nipe, blackjack))
 
-    def embaralhar(self):
+    def shuffle(self):
         shuffle(self._deck)
 
-    def retirarCarta(self):
-        return self._deck.pop(0)
+    def pop(self, index=0):
+        return self._deck.pop(index)
 
-    def devolverCarta(self, carta):
+    def append(self, carta):
         self._deck.append(carta)
 
     def distribuir(self, players, handsize):
         tamcards = len(players)*handsize
-        tamdeck = len(self._deck)
+        tamdeck = len(self)
 
         if tamdeck >= tamcards:
-            self.embaralhar()
+            self.shuffle()
             for i in range(handsize):
                 for player in players:
                     player.comprarCarta(self)
@@ -40,11 +41,20 @@ class Deck:
     def getdeck(self):
         return self._deck
 
+    def __getitem__(self, item):
+        return self._deck[item]
+
+    def __iter__(self):
+        return iter(self._deck)
+
     def __len__(self):
         return len(self._deck)
 
+    def __int__(self):
+        return self.__numberOfDecks
+
     def __str__(self):
-        return f"{self._numberOfDecks} deck(s)"
+        return f"{self.__numberOfDecks} deck(s)"
 
 
 class Card:

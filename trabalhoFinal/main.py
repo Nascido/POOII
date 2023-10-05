@@ -5,8 +5,9 @@ from decks import Deck
     Sistema de Casino - POOII 
 """
 
-baralho = Deck(blackjack=True)
+baralho = Deck()
 
-baralho.embaralhar()
+baralho.shuffle()
 
-card = baralho.retirarCarta()
+card1 = baralho.pop()
+card2 = baralho.pop()

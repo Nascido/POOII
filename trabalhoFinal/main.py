@@ -6,8 +6,3 @@ from decks import Deck
 """
 
 baralho = Deck()
-
-baralho.shuffle()
-
-card1 = baralho.pop()
-card2 = baralho.pop()

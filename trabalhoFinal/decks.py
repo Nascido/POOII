@@ -7,6 +7,7 @@ class Deck:
         self.__nipes = ['ouros', 'copas', 'espadas', 'paus']
         self.__num = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
         self.__numberOfDecks = decks
+        self.index = 0
         self._deck = []
 
         for i in range(decks):
@@ -45,7 +46,15 @@ class Deck:
         return self._deck[item]
 
     def __iter__(self):
-        return iter(self._deck)
+        return self
+
+    def __next__(self):
+        if self.index < len(self._deck):
+            result = self._deck[self.index]
+            self.index += 1
+            return result
+        else:
+            raise StopIteration
 
     def __len__(self):
         return len(self._deck)

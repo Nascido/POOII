@@ -1,3 +1,4 @@
+from decks import Card
 
 
 class Player:
@@ -13,9 +14,22 @@ class Player:
 
     def pop(self, indexCarta=0):
         return self._hand.pop(indexCarta)
-    
+
+    def append(self, item):
+        if type(item) is Card:
+            self._hand.append(item)
+
+        else:
+            raise TypeError("the item type need to be Card")
+
+    def remove(self, item):
+        self._hand.remove(item)
+
     def getname(self):
         return self._name
+
+    def __getitem__(self, item):
+        return self._hand[item]
 
     def __iter__(self):
         return self
@@ -32,8 +46,8 @@ class Player:
         return len(self._hand)
 
     def __str__(self):
-        return f"{self._name}: {self._hand}"
-    
+        return f"{self._name}"
+
 
 class Game:
     def __init__(self) -> None:

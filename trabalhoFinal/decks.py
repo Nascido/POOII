@@ -25,7 +25,10 @@ class Deck:
         return self._deck.pop(index)
 
     def append(self, carta):
-        self._deck.append(carta)
+        if type(carta) is Card:
+            self._deck.append(carta)
+        else:
+            raise TypeError("the item type need to be Card")
 
     def distribuir(self, players, handsize):
         tamcards = len(players)*handsize

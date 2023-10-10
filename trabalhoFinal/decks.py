@@ -50,7 +50,8 @@ class Deck:
 
     def getdeck(self):
         return self._deck
-
+    
+    # Builtins
     def __getitem__(self, item):
         return self._deck[item]
 
@@ -157,6 +158,7 @@ class Card:
     def getaltvalor(self):
         return self._valorAlternado
 
+    # Builtins
     def __int__(self):
         return self._valor
 

@@ -31,6 +31,7 @@ class Player:
     def getname(self):
         return self._name
 
+    # Builtins
     def __getitem__(self, item):
         return self._hand[item]
 

@@ -30,6 +30,12 @@ class Deck:
         else:
             raise TypeError("the item type need to be Card")
 
+    def remove(self, item):
+        self._hand.remove(item)
+
+    def insert(self, index, item):
+        self._deck.insert(index, item)
+
     def distribuir(self, players, handsize):
         tamcards = len(players)*handsize
         tamdeck = len(self)

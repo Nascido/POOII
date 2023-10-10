@@ -25,6 +25,9 @@ class Player:
     def remove(self, item):
         self._hand.remove(item)
 
+    def insert(self, index, item):
+        self._hand.insert(index, item)
+
     def getname(self):
         return self._name
 

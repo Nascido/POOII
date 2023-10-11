@@ -31,7 +31,7 @@ class Deck:
             raise TypeError("the item type need to be Card")
 
     def remove(self, item):
-        self._hand.remove(item)
+        self._deck.remove(item)
 
     def insert(self, index, item):
         self._deck.insert(index, item)

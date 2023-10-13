@@ -1,13 +1,17 @@
 
 from decks import Deck
+from games import Player
 
 """
     Sistema de Casino - POOII 
 """
 
-baralho = Deck()
+baralho = Deck(blackjack=True)
 
-baralho.shuffle()
+player1 = Player("Rafael", 200)
+player2 = Player("Tobias", 200)
+player3 = Player("Rodrigo", 200)
 
-card1 = baralho.pop()
-card2 = baralho.pop()
+players = [player1, player2, player3]
+
+dealer = Player("Dealer", 1000)

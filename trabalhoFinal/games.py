@@ -1,6 +1,4 @@
 
-from decks import Deck
-
 
 class Player:
     def __init__(self, nome):
@@ -12,7 +10,7 @@ class Player:
         carta = deck.retirarCarta()
         self._hand.append(carta)
 
-    def jogarCarta(self, indexCarta):
+    def jogarCarta(self, indexCarta=0):
         return self._hand.pop(indexCarta)
     
     def getname(self):
@@ -23,9 +21,8 @@ class Player:
     
 
 class Game:
-    def __init__(self) -> None:
-        self._game = None
-        self._players = None
+    def __init__(self, players):
+        self._players = players
 
     def getplayers(self):
         return self._players
@@ -35,4 +32,5 @@ class Game:
 
 
 class Blackjack(Game):
-    pass
+    def __init__(self, players=None):
+        super().__init__(players)

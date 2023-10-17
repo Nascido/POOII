@@ -49,6 +49,9 @@ class Player:
     def getname(self):
         return self._name
 
+    def getfichas(self):
+        return self._fichas
+
     # Builtins
     def __getitem__(self, item):
         return self._hand[item]
@@ -105,19 +108,34 @@ class Poker(Game):
         self._passo = aumentoBlind
 
     def iniciar(self):
-        baralho = Deck()
-        baralho.shuffle()
+        participantes = []
+        for player in self._players:
+            fichas = player.getfichas()
+            if fichas >= self._big:
+                participantes.append(player)
 
-        if self._fase == 0:
-            small = self._players[0]
-            big = self._players[1]
+        tam = len(participantes)
 
-            small.apostar(self._small)
-            big.apostar(self._big)
+        while self._fase < 4 and tam > 1:
+            baralho = Deck()
+            baralho.shuffle()
 
-        baralho.distribuir(self._players, 2)
+            if self._fase == 0:
+                small = participantes[0]
+                big = participantes[1]
 
-    def rodadaDeApostas(self):
+                small.apostar(self._small)
+                big.apostar(self._big)
+
+                baralho.distribuir(self._players, 2)
+
+            elif self._fase == 1:
+                baralho.distribuir([self._tableCards], 3)
+
+            else:
+                self._tableCards.append(baralho.pop())
+
+    def rodadaDeApostas(self, participantes):
         pass
 
     def definirGanhador(self):

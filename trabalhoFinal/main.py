@@ -12,3 +12,4 @@ player3 = Player("Carioca", 1000)
 players = [player1, player2, player3]
 
 pokergame = Poker(players)
+pokergame.iniciar()

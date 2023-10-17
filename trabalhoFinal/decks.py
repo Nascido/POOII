@@ -152,8 +152,8 @@ class Card:
     def getnipe(self):
         return self._nipe
 
-    def getvalor(self):
-        return self._valor
+    def getvalorOriginal(self):
+        return self._valorOriginal
 
     def getaltvalor(self):
         return self._valorAlternado

@@ -1,4 +1,4 @@
-from decks import Card
+from decks import Deck, Card
 
 
 class Player:
@@ -75,16 +75,17 @@ class Player:
 
 
 class Game:
-    def __init__(self, players, caixa) -> None:
+    def __init__(self, players) -> None:
         self._players = players
         self._pote = 0
-        self._caixa = caixa
+        self._caixa = 0
 
     def getplayers(self):
         return self._players
 
+
 class Poker(Game):
-    def __init__(self, players, bigBlind = 50, aumentoBlind = 50) -> None:
+    def __init__(self, players, bigBlind=50, aumentoBlind=50) -> None:
         super().__init__(players)
         # Até 5 cartas
         self._tableCards = []
@@ -96,7 +97,31 @@ class Poker(Game):
         # fase 4: Showdown
         self._fase = 0
 
+        self._rodadas = 0
+
         # Blinds
         self._small = bigBlind/2
         self._big = bigBlind
         self._passo = aumentoBlind
+
+    def iniciar(self):
+        baralho = Deck()
+        baralho.shuffle()
+
+        if self._fase == 0:
+            small = self._players[0]
+            big = self._players[1]
+
+            small.apostar(self._small)
+            big.apostar(self._big)
+
+        baralho.distribuir(self._players, 2)
+
+    def rodadaDeApostas(self):
+        pass
+
+    def definirGanhador(self):
+        pass
+
+    def showdown(self):
+        pass

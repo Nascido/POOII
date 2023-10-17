@@ -83,21 +83,20 @@ class Game:
     def getplayers(self):
         return self._players
 
+class Poker(Game):
+    def __init__(self, players, bigBlind = 50, aumentoBlind = 50) -> None:
+        super().__init__(players)
+        # Até 5 cartas
+        self._tableCards = []
 
-class Blackjack(Game):
-    def __init__(self, players, caixa, apostaInicial=20) -> None:
-        super().__init__(players, caixa)
-        self._dealerHand = []
-        self._rodadas = 0
-        self._apostaInicial = apostaInicial
+        # fase 0: Pre-flop
+        # fase 1: Flop
+        # fase 2: Turn
+        # fase 3: River
+        # fase 4: Showdown
+        self._fase = 0
 
-    def iniciar(self):
-        participantes = []
-        for player in self._players:
-            participar = bool(input(f"{player} vai participar?"))
-
-            if participar:
-                participantes.append(player)
-
-    def rodada(self, players):
-        pass
+        # Blinds
+        self._small = bigBlind/2
+        self._big = bigBlind
+        self._passo = aumentoBlind

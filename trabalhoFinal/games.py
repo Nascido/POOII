@@ -12,13 +12,15 @@ class Player:
         carta = deck.pop()
         self._hand.append(carta)
 
+    def testeFichas(self, valor):
+        return self._fichas > valor
+
     def apostar(self, valor):
         if self._fichas >= valor:
             self._fichas -= valor
             return valor
         else:
-            print("Valor maior que o número de fihcas")
-            return 0
+            raise ValueError
 
     def receber(self, valor):
         self._fichas += valor
@@ -103,31 +105,20 @@ class Poker(Game):
         self._rodadas = 0
 
         # Blinds
-        self._small = bigBlind/2
         self._big = bigBlind
         self._passo = aumentoBlind
 
+        # Side Pote
+        self._sidePote = []
+
     def iniciar(self):
-        participantes = []
-        for player in self._players:
-            fichas = player.getfichas()
-            if fichas >= self._big:
-                participantes.append(player)
-
-        tam = len(participantes)
-
-        while self._fase < 4 and tam > 1:
+        while self._fase < 4 and self.lenPlayers() > 1:
             baralho = Deck()
             baralho.shuffle()
 
             if self._fase == 0:
-                small = participantes[0]
-                big = participantes[1]
-
-                small.apostar(self._small)
-                big.apostar(self._big)
-
                 baralho.distribuir(self._players, 2)
+                self.rodadaDeApostas(self._players, blind=True)
 
             elif self._fase == 1:
                 baralho.distribuir([self._tableCards], 3)
@@ -135,11 +126,33 @@ class Poker(Game):
             else:
                 self._tableCards.append(baralho.pop())
 
-    def rodadaDeApostas(self, participantes):
-        pass
+    def rodadaDeApostas(self, participantes, blind=False):
+        if blind:
+            small = participantes[0]
+            big = participantes[1]
+            i = 0
+            for p in [big, small]:
+                i += 1
+                try:
+                    self._pote += p.apostar(self._big//i)
+                except ValueError:
+                    self.createSidepot(self._big//i)
+
+            for player in participantes[2:]:
+                print("################################################")
+                print(f"{player} - Opções disponíveis:")
+                print(f"1 - Cobrir: {self._big}")
+                print("2 - Aumentar")
+                print("3 - Desistir")
 
     def definirGanhador(self):
         pass
 
+    def createSidepot(self):
+        pass
+
     def showdown(self):
         pass
+
+    def lenPlayers(self):
+        return len(self._players)

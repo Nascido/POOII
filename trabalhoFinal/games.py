@@ -144,13 +144,13 @@ class Poker(Game):
                 print(f"1 - Cobrir: {self._big}")
                 print("2 - Aumentar")
                 print("3 - Desistir")
-
-                
+                print(f"{str(player[0]), str(player[1])}")
+                input("Opção escolhida: ")
 
     def definirGanhador(self):
         pass
 
-    def createSidepot(self):
+    def createSidepot(self, value):
         pass
 
     def showdown(self):

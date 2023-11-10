@@ -2,7 +2,7 @@
 from games import Player, Poker
 
 """
-Casino trabalho final
+    Cassino
 """
 
 player1 = Player("Rafael", 1000)

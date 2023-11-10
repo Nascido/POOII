@@ -1,13 +1,15 @@
 
-from games import Player, Game, Blackjack
-from decks import Deck, Card
+from games import Player, Poker
 
 """
-    Sistema de Casino - POOII 
+    Cassino
 """
 
-baralho = Deck()
+player1 = Player("Rafael", 1000)
+player2 = Player("Éric", 1000)
+player3 = Player("Carioca", 1000)
 
-baralho.embaralhar()
+players = [player1, player2, player3]
 
-carta = baralho.retirarCarta()
+pokergame = Poker(players)
+pokergame.iniciar()
